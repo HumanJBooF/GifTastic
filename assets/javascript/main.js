@@ -11,11 +11,11 @@ $(function () {
         'Dexter',
         'Twin Peaks'];
 
-
+    var favorites = [];
 
     //function to loop the topics array and create a button for each one
     function createButtons() {
-
+        
         $('.buttons').empty();
 
         for (i = 0; i < topics.length; i++) {
@@ -31,7 +31,7 @@ $(function () {
 
         console.log('THIS IS ' + $(this).attr('data-name'))
         var all = $(this).attr('data-name') //takes the data-name and uses it in url
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + all + "&limit=10&api_key=21pbXpSdx68vgJpuoB7wb0uQgVGGuGUg";
+        var queryURL = `https://api.giphy.com/v1/gifs/search?q=${all}&limit=10&api_key=21pbXpSdx68vgJpuoB7wb0uQgVGGuGUg`;
         $('.info').empty() //empty the previous gifs
         $.ajax({ //hey ajax!
             url: queryURL,
@@ -43,13 +43,16 @@ $(function () {
 
                 var rating = response.data[i].rating //Putting the rating in a var
                 var title = response.data[i].title  //Title also
-
+                var $star = $('<i class="star far fa-star">Add To Favorites</i>')
                 var $div = $('<div>') //creating a div
+                var $div1 = $('<div>')
                 var $image = $('<img>').addClass('images') //creating image tag with class of images
-                var $p = $('<p class="rating">Rating: ' + rating + '<br>' + 'Title: ' + title + '<br>' + '</p>') //adding the rating and title in a p tag
-
+                var $p = $(`<p class="rating">Rating: ${rating}</p><p class="title">Title: ${title}</p>`) //adding the rating and title in a p tag
+                
+                $star.attr('value', response.data[i].images.fixed_height.url)
+                $div1.append($p, $star)
                 $div.addClass('gifs animated jackInTheBox') //adding class name
-                $div.append($image, $p) //appending the images along with the p tag to an empty div
+                $div.append($image, $div1) //appending the images along with the p tag to an empty div
                 $image.attr('src', response.data[i].images.fixed_height_still.url) //setting up a the still and animate image attr, still will be defualt
                     .attr('data-still', response.data[i].images.fixed_height_still.url)
                     .attr('data-animate', response.data[i].images.fixed_height.url)
@@ -66,7 +69,7 @@ $(function () {
                 $(this).attr('src', $(this).attr('data-animate'))
                 console.log('first case')
                 break;
-            case $(this).attr('data-animate'):  //of the source is data-animate, switch to data-still
+            case $(this).attr('data-animate'):  //if the source is data-animate, switch to data-still
                 $(this).attr('src', $(this).attr('data-still'))
                 console.log('second case')
                 break;
@@ -75,21 +78,31 @@ $(function () {
         }
     }
 
+    function pushToFavs() {
+        var test = $(this).attr('value')
+        favorites.push(test)
+        console.log(favorites)
+        localStorage.setItem('Favorites', JSON.stringify(favorites))
+        
+    }
+
     //click event for submit form
     $('.submit').on('click', function () {
         var input = $('.user-input').val().trim() //store what was written in form to variable
-        form.reset() //empty the submit form
-
+        form.reset(); //empty the submit form
         topics.push(input); //add input to topics array
-
+        event.preventDefault();
         createButtons(); //create a new button
 
         return false
     })
 
     createButtons(); //calling function to have buttons on start
+
     //when you click on btn class dipslayImg function called
     $(document).on('click', '.btn', displayImg)
     //when you click on images class stillAnimate function called
     $(document).on('click', '.images', stillAnimate)
+    
+    $(document).on('click', '.star', pushToFavs)
 });
