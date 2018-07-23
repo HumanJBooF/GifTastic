@@ -32,6 +32,7 @@ body {
     width: 100%;
 }
 
+
 .header {
     min-height: 10vh;
     display: flex;
@@ -92,14 +93,13 @@ body {
 }
 
 .footer {
-    height: 10vh;
     border-top: 1pt solid black;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    padding-top: 20px;
 }
 
 #form {
     margin-top: 2vh;
 }
-
 

@@ -11,11 +11,33 @@ $(function () {
         'Dexter',
         'Twin Peaks'];
 
-    var favorites = [];
+    var favorites = JSON.parse(localStorage.getItem('favorites'))
 
+    if (!Array.isArray(favorites)) {
+        favorites = [];
+    }
+
+    function showFavs() {
+        $('.info').empty();
+
+        var getFavs = JSON.parse(localStorage.getItem('favorites'));
+
+        if (!Array.isArray(getFavs)) {
+            getFavs = [];
+        }
+
+        for(var i = 0; i < getFavs.length; i++) {
+            var $div2 = $('<div>')
+            var $img = $('<img>').attr('src', getFavs[i])
+            var del = $('<p>').html('Remove')
+            $($div2).append($img, del)
+            $('.info').append($div2);
+        }
+    }
+    
     //function to loop the topics array and create a button for each one
     function createButtons() {
-        
+
         $('.buttons').empty();
 
         for (i = 0; i < topics.length; i++) {
@@ -48,7 +70,7 @@ $(function () {
                 var $div1 = $('<div>')
                 var $image = $('<img>').addClass('images') //creating image tag with class of images
                 var $p = $(`<p class="rating">Rating: ${rating}</p><p class="title">Title: ${title}</p>`) //adding the rating and title in a p tag
-                
+
                 $star.attr('value', response.data[i].images.fixed_height.url)
                 $div1.append($p, $star)
                 $div.addClass('gifs animated jackInTheBox') //adding class name
@@ -79,11 +101,10 @@ $(function () {
     }
 
     function pushToFavs() {
-        var test = $(this).attr('value')
-        favorites.push(test)
+        var val = $(this).attr('value')
+        favorites.push(val)
         console.log(favorites)
-        localStorage.setItem('Favorites', JSON.stringify(favorites))
-        
+        localStorage.setItem('favorites', JSON.stringify(favorites))
     }
 
     //click event for submit form
@@ -96,13 +117,18 @@ $(function () {
 
         return false
     })
-
+    
     createButtons(); //calling function to have buttons on start
 
     //when you click on btn class dipslayImg function called
     $(document).on('click', '.btn', displayImg)
     //when you click on images class stillAnimate function called
     $(document).on('click', '.images', stillAnimate)
-    
+
     $(document).on('click', '.star', pushToFavs)
+
+    $('.show').on('click', function() {
+        console.log(showFavs)
+        showFavs();
+    })
 });
