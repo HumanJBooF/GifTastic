@@ -26,15 +26,17 @@ $(function () {
             getFavs = [];
         }
 
-        for(var i = 0; i < getFavs.length; i++) {
-            var $div2 = $('<div>')
-            var $img = $('<img>').attr('src', getFavs[i])
-            var del = $('<p>').html('Remove')
-            $($div2).append($img, del)
+        for (var i = 0; i < getFavs.length; i++) {
+            var $div2 = $('<div>').addClass(`favDiv_${i} fav animated bounceInUp`)
+            var $img = $('<img>').attr('src', getFavs[i]).addClass('favImg')
+            var $del = $('<button>').html('<i class="fas fa-eraser">Remove</i>').addClass('remove').attr('src',i)
+            var $div3 = $('<div>').addClass('favTextBox')
+            $($div3).append($del)
+            $($div2).append($img, $div3)
             $('.info').append($div2);
         }
     }
-    
+
     //function to loop the topics array and create a button for each one
     function createButtons() {
 
@@ -65,17 +67,19 @@ $(function () {
 
                 var rating = response.data[i].rating //Putting the rating in a var
                 var title = response.data[i].title  //Title also
-                var $star = $('<i class="star far fa-star">Add To Favorites</i>')
+                var $star = $('<button type="button" class="star"><i class="far fa-star">Add To Favorites</i></button>')
                 var $div = $('<div>') //creating a div
-                var $div1 = $('<div>')
+                var $div1 = $('<div>').addClass('textBox')
                 var $image = $('<img>').addClass('images') //creating image tag with class of images
                 var $p = $(`<p class="rating">Rating: ${rating}</p><p class="title">Title: ${title}</p>`) //adding the rating and title in a p tag
 
-                $star.attr('value', response.data[i].images.fixed_height.url)
+                $star.attr('data-value', response.data[i].images.fixed_height.url)
                 $div1.append($p, $star)
-                $div.addClass('gifs animated jackInTheBox') //adding class name
-                $div.append($image, $div1) //appending the images along with the p tag to an empty div
-                $image.attr('src', response.data[i].images.fixed_height_still.url) //setting up a the still and animate image attr, still will be defualt
+                //adding class name, appending the images along with the p tag to an empty div
+                $div.addClass('gifs animated jackInTheBox').append($image, $div1)
+
+                //setting up a the still and animate image attr, still will be defualt
+                $image.attr('src', response.data[i].images.fixed_height_still.url)
                     .attr('data-still', response.data[i].images.fixed_height_still.url)
                     .attr('data-animate', response.data[i].images.fixed_height.url)
                 $('.info').append($div) //append the divs with the image and p tag to the .info div
@@ -101,10 +105,22 @@ $(function () {
     }
 
     function pushToFavs() {
-        var val = $(this).attr('value')
-        favorites.push(val)
-        console.log(favorites)
-        localStorage.setItem('favorites', JSON.stringify(favorites))
+        var val = $(this).attr('data-value');
+        favorites.push(val);
+        console.log(val);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+
+    function removeFav() {
+        var remove = JSON.parse(localStorage.getItem('favorites'));
+        var currentIndex = $(this).attr('src')
+console.log(currentIndex)
+
+        remove.splice(currentIndex, 1);
+        favorites = remove;
+        $(`.favDiv_${currentIndex}`).remove();
+       
+        localStorage.setItem('favorites', JSON.stringify(remove))
     }
 
     //click event for submit form
@@ -117,18 +133,20 @@ $(function () {
 
         return false
     })
-    
+
     createButtons(); //calling function to have buttons on start
 
     //when you click on btn class dipslayImg function called
     $(document).on('click', '.btn', displayImg)
     //when you click on images class stillAnimate function called
     $(document).on('click', '.images', stillAnimate)
+    //when you click the star on a gif it will add it to your favorites list
+    $(document).on('click', 'button.star', pushToFavs)
 
-    $(document).on('click', '.star', pushToFavs)
+    $(document).on('click', '.remove', removeFav)
 
-    $('.show').on('click', function() {
-        console.log(showFavs)
+    $('.show').on('click', function () {
+       $(this).toggleClass('animated wobble') 
         showFavs();
     })
 });

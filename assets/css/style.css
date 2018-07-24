@@ -8,20 +8,33 @@ body {
     min-height: 645px;
     height: 100%;
     width: auto;
+    font-family: 'Bitter', serif;
 }
 .buttons {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: stretch;
     flex: 1;
     border-right: 1pt solid black;
     height: 100vh;
+    flex-wrap: wrap;
+    font-weight: bold;
 }
 
 .btn {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 0 10px;
+	color:rgb(0, 0, 0);
+	background-color:transparent;
+    margin:10px 40px;	
+    padding: 8px 12px;
+    box-shadow: inset 0pt 0pt 12pt;
+	background-size: 200% 100%;	
+	background-image: linear-gradient(to right, transparent 50%, rgba(255, 0, 0, 1) 50%);
+	transition: background-position .3s cubic-bezier(0.19, 1, 0.22, 1) .1s, color .5s ease 0s, background-color .5s ease;
+}
+.btn:hover {
+    color:rgba(255, 255, 255, 1);
+	background-color:rgb(255, 0, 0);
+	background-position: -100% 100%;
 }
 
 .wrapper {
@@ -32,13 +45,13 @@ body {
     width: 100%;
 }
 
-
 .header {
     min-height: 10vh;
     display: flex;
     justify-content: center;
     border-bottom: 1pt solid black;
     padding: 5vh;
+    font-size: 2em;
 }
 
 .info {
@@ -49,17 +62,16 @@ body {
     overflow-x: hidden;
     justify-content: space-evenly;
 }
+
 ::-webkit-scrollbar {
     width: 20px;
 }
-
 
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 10px;
 }
  
-
 ::-webkit-scrollbar-thumb {
     background: red; 
     border-radius: 10px;
@@ -76,30 +88,40 @@ body {
     display: flex;
     flex-direction: column;
     width: 30vw;
-}
-
-
-
-.rating  {
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 10px;
+    box-shadow: 0pt 0pt 10pt;
 }
 
 .footer {
     border-top: 1pt solid black;
     display: flex;
     justify-content: space-around;
-    padding-top: 20px;
+    padding: 20px;
 }
 
-#form {
-    margin-top: 2vh;
+.fav {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
 }
 
+.textBox {
+    text-align: center;
+    padding: 20px;
+}
+
+.rating {
+    font-size: 20px;
+}
+
+.rating, .title {
+    border-bottom: 1pt solid;
+    margin-bottom: 10px;
+}
+
+.favTextBox {
+    text-align: center;
+    border-right: 1pt solid;
+    border-left: 1pt solid;
+    border-bottom: 1pt solid;
+    padding: 10px;
+}
