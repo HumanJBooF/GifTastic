@@ -3,7 +3,7 @@ $(function () {
     var topics = ['A Clockwork Orange',
         'American Psycho',
         'Fargo',
-        'Nier Automata',
+        'Taxi Driver',
         'Street Fighter',
         'Metal Gear Solid',
         'The Legend of Zelda',
@@ -67,7 +67,8 @@ $(function () {
 
                 var rating = response.data[i].rating //Putting the rating in a var
                 var title = response.data[i].title  //Title also
-                var $star = $('<button type="button" class="star"><i class="far fa-star">Add To Favorites</i></button>')
+                var download = response.data[i].images.original.url
+                var $star = $(`<button type="button" class="star"><i class="far fa-star">Add To Favorites</i></button><a href=${download} download>Download</a>`)
                 var $div = $('<div>') //creating a div
                 var $div1 = $('<div>').addClass('textBox')
                 var $image = $('<img>').addClass('images') //creating image tag with class of images
@@ -126,12 +127,16 @@ console.log(currentIndex)
     //click event for submit form
     $('.submit').on('click', function () {
         var input = $('.user-input').val().trim() //store what was written in form to variable
+        if(!input){
+            alert('You need to type something!')
+        }else {
         form.reset(); //empty the submit form
         topics.push(input); //add input to topics array
         event.preventDefault();
         createButtons(); //create a new button
 
         return false
+        }
     })
 
     createButtons(); //calling function to have buttons on start
