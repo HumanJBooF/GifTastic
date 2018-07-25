@@ -29,7 +29,7 @@ $(function () {
         for (var i = 0; i < getFavs.length; i++) {
             var $div2 = $('<div>').addClass(`favDiv_${i} fav animated bounceInUp`)
             var $img = $('<img>').attr('src', getFavs[i]).addClass('favImg')
-            var $del = $('<button>').html('<i class="fas fa-eraser">Remove</i>').addClass('remove').attr('src',i)
+            var $del = $('<button>').html('<i class="fas fa-eraser">Remove</i>').addClass('remove').attr('src', i)
             var $div3 = $('<div>').addClass('favTextBox')
             $($div3).append($del)
             $($div2).append($img, $div3)
@@ -115,27 +115,28 @@ $(function () {
     function removeFav() {
         var remove = JSON.parse(localStorage.getItem('favorites'));
         var currentIndex = $(this).attr('src')
-console.log(currentIndex)
+        console.log(currentIndex)
 
         remove.splice(currentIndex, 1);
         favorites = remove;
         $(`.favDiv_${currentIndex}`).remove();
-       
+
         localStorage.setItem('favorites', JSON.stringify(remove))
     }
 
     //click event for submit form
     $('.submit').on('click', function () {
         var input = $('.user-input').val().trim() //store what was written in form to variable
-        if(!input){
+        if (!input) {
+            event.preventDefault();
             alert('You need to type something!')
-        }else {
-        form.reset(); //empty the submit form
-        topics.push(input); //add input to topics array
-        event.preventDefault();
-        createButtons(); //create a new button
+        } else {
+            form.reset(); //empty the submit form
+            topics.push(input); //add input to topics array
+            event.preventDefault();
+            createButtons(); //create a new button
 
-        return false
+            return false
         }
     })
 
@@ -151,7 +152,7 @@ console.log(currentIndex)
     $(document).on('click', '.remove', removeFav)
 
     $('.show').on('click', function () {
-       $(this).toggleClass('animated wobble') 
+        $(this).toggleClass('animated wobble')
         showFavs();
     })
 });

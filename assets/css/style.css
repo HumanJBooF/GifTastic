@@ -96,14 +96,16 @@ body {
 .footer {
     display: flex;
     justify-content: space-around;
-    padding: 5vh;
+    padding: 10px;
     background: url(../images/header.png); 
 }
 
 .fav {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin-top: 20px;
+    height: fit-content;
+    border: 3pt outset;
 }
 
 .textBox, .favTextBox {
@@ -137,6 +139,21 @@ body {
     font-size: 2em;
 }
 
-.fa-smile {
-    margin-top: 20px;
+.fa-smile, i.show {
+    margin-top: 25px;
+}
+
+#form {
+    padding: 15px;
+    background: url(../images/images.jpg);
+    border: 2pt solid;
+}
+
+label {
+    font-size: 20px;
+    border-bottom: 3pt solid;
+}
+
+.user-input {
+    box-shadow: 0pt 0pt 8pt black;
 }
