@@ -39,6 +39,10 @@ body {
 	background-position: -100% 100%;
 }
 
+.star:focus {
+    color: yellow;
+    background: black;
+}
 .wrapper {
     display: flex;
     flex-direction: column;
