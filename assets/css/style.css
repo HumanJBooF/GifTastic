@@ -97,7 +97,7 @@ body {
     display: flex;
     justify-content: space-around;
     padding: 5vh;
-    background: url(../images/header.png)); 
+    background: url(../images/header.png); 
 }
 
 .fav {
