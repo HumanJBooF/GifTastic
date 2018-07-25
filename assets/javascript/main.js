@@ -105,30 +105,31 @@ $(function () {
         }
     }
 
+    // function to add gifs to favorites
     function pushToFavs() {
-        var val = $(this).attr('data-value');
-        favorites.push(val);
+        var val = $(this).attr('data-value'); //grabbing the data-value in var val
+        favorites.push(val); //push it to the favorites array
         console.log(val);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+        localStorage.setItem('favorites', JSON.stringify(favorites)); //store it
     }
-
+    //function to remove from favorites list
     function removeFav() {
-        var remove = JSON.parse(localStorage.getItem('favorites'));
-        var currentIndex = $(this).attr('src')
+        var remove = JSON.parse(localStorage.getItem('favorites')); //parse the favorites array
+        var currentIndex = $(this).attr('src')  //grab the current gif
         console.log(currentIndex)
 
-        remove.splice(currentIndex, 1);
-        favorites = remove;
+        remove.splice(currentIndex, 1); //remove image from remove array
+        favorites = remove; //turn remove back into favorites array
         $(`.favDiv_${currentIndex}`).remove();
 
-        localStorage.setItem('favorites', JSON.stringify(remove))
+        localStorage.setItem('favorites', JSON.stringify(remove)) //re set the array
     }
 
     //click event for submit form
     $('.submit').on('click', function () {
         var input = $('.user-input').val().trim() //store what was written in form to variable
         if (!input) {
-            event.preventDefault();
+            event.preventDefault(); //prevent reload
             alert('You need to type something!')
         } else {
             form.reset(); //empty the submit form
@@ -148,9 +149,9 @@ $(function () {
     $(document).on('click', '.images', stillAnimate)
     //when you click the star on a gif it will add it to your favorites list
     $(document).on('click', 'button.star', pushToFavs)
-
+    //when you click remove button gif is removed
     $(document).on('click', '.remove', removeFav)
-
+    //show favorites and animate the favorite star
     $('.show').on('click', function () {
         $(this).toggleClass('animated wobble')
         showFavs();
