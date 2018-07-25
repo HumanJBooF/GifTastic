@@ -157,3 +157,7 @@ $(function () {
         showFavs();
     })
 });
+
+    // A checker function to make sure duplicates cant be added
+    // better mobile responsiveness
+    // a way to add more gifs to the current gif category 
