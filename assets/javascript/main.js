@@ -110,17 +110,18 @@ $(function () {
         var val = $(this).attr('data-value'); //grabbing the data-value in var val
         var getFavs = JSON.parse(localStorage.getItem('favorites'))
         var foundDuplicate = false
-        for(var i = 0; i < getFavs.length; i++) {
-         if (getFavs[i] === val) {
-            foundDuplicate = true;
-         }
+        //checking for dupiclate
+        for (var i = 0; i < getFavs.length; i++) {
+            if (getFavs[i] === val) {
+                foundDuplicate = true;
+            }
         }
-         if (!foundDuplicate) {
+        if (!foundDuplicate) {
             favorites.push(val); //push it to the favorites array
             console.log(val);
             localStorage.setItem('favorites', JSON.stringify(favorites)); //store it
         }
-      
+
     }
     //function to remove from favorites list
     function removeFav() {
@@ -168,6 +169,5 @@ $(function () {
     })
 });
 
-    // A checker function to make sure duplicates cant be added
     // better mobile responsiveness
     // a way to add more gifs to the current gif category 
