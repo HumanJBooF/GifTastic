@@ -108,9 +108,19 @@ $(function () {
     // function to add gifs to favorites
     function pushToFavs() {
         var val = $(this).attr('data-value'); //grabbing the data-value in var val
-        favorites.push(val); //push it to the favorites array
-        console.log(val);
-        localStorage.setItem('favorites', JSON.stringify(favorites)); //store it
+        var getFavs = JSON.parse(localStorage.getItem('favorites'))
+        var foundDuplicate = false
+        for(var i = 0; i < getFavs.length; i++) {
+         if (getFavs[i] === val) {
+            foundDuplicate = true;
+         }
+        }
+         if (!foundDuplicate) {
+            favorites.push(val); //push it to the favorites array
+            console.log(val);
+            localStorage.setItem('favorites', JSON.stringify(favorites)); //store it
+        }
+      
     }
     //function to remove from favorites list
     function removeFav() {
